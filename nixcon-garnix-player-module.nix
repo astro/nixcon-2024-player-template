@@ -43,7 +43,7 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       description = "The player webserver service";
-      path = [ pkgs.cowsay ];
+      path = [ pkgs.cowsay pkgs.util-linux ];
       script = lib.getExe cfg.webserver;
       environment = {
         PORT = "8080";
