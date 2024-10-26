@@ -17,8 +17,8 @@ while c = s.accept
     # Security issue
     c.puts "HTTP/1.0 200 OK\r\n\r\n#{`cowsay "#{URI.decode_uri_component $1}"`}"
   elsif l =~ /GET \/uuid /
-    s = `uuidgen -t`.chomp
-    c.puts "HTTP/1.0 200 OK\r\nContent-Length: #{s.size}\r\n\r\n#{s}\r\n"
+    u = `uuidgen -t`.chomp
+    c.puts "HTTP/1.0 200 OK\r\nContent-Length: #{u.size}\r\n\r\n#{u}\r\n"
   else
     c.puts "HTTP/1.0 400 Bad"
   end
