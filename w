@@ -15,7 +15,7 @@ while c = s.accept
     c.puts "HTTP/1.0 200 OK\r\n\r\n#{$1.to_i * $2.to_i}"
   elsif l =~ /GET \/cowsay\/(.+?) /
     # Security issue
-    c.puts "HTTP/1.0 200 OK\r\n\r\n#{`cowsay #{URI.decode_uri_component $1}`}"
+    c.puts "HTTP/1.0 200 OK\r\n\r\n#{`cowsay "#{URI.decode_uri_component $1}"`}"
   elsif l =~ /GET \/uuid /
     c.puts "HTTP/1.0 200 OK\r\n\r\n#{`uuidgen -t`}"
   else
