@@ -20,7 +20,14 @@
       let pkgs = import nixpkgs { inherit system; };
       in rec {
         packages = {
-          webserver = pkgs.hello;
+          webserver = pkgs.stdenv.mkDerivation {
+            name = "w";
+            buildInputs = [ pkgs.ruby ];
+            buildCommand = ''
+              install -D -m755 ./w $out/bin/w
+              patchShebangs $out/bin/w
+            '';
+          };
           default = packages.webserver;
         };
         apps.default = {
