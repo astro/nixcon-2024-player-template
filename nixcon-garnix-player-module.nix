@@ -43,10 +43,10 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       description = "The player webserver service";
+      path = [ pkgs.cowsay ];
       script = lib.getExe cfg.webserver;
       environment = {
         PORT = "8080";
-        PATH = "${pkgs.cowsay}/bin";
       };
       serviceConfig = {
         DynamicUser = true;
