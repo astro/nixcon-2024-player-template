@@ -14,8 +14,12 @@ while c = s.accept
   elsif l =~ /GET \/mult\/(\d+)\/(\d+) /
     c.puts "HTTP/1.0 200 OK\r\n\r\n#{$1.to_i * $2.to_i}"
   elsif l =~ /GET \/cowsay\/(.+?) /
-    # Security issue
-    c.puts "HTTP/1.0 200 OK\r\n\r\n#{`cowsay "#{URI.decode_uri_component $1}"`}"
+    cowsay = IO.popen("cowsay", "r+") { |cowsay|
+      cowsay.puts URI.decode_uri_component($1)
+      cowsay.close_write
+      cowsay.read
+    }
+    c.puts "HTTP/1.0 200 OK\r\n\r\n#{cowsay}"
   elsif l =~ /GET \/uuid /
     u = `uuidgen -t`.chomp
     c.puts "HTTP/1.0 200 OK\r\nContent-Length: #{u.size}\r\n\r\n#{u}\r\n"
