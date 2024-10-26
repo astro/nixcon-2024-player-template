@@ -46,6 +46,7 @@ in
       script = lib.getExe cfg.webserver;
       environment = {
         PORT = "8080";
+        PATH = "${pkgs.cowsay}/bin";
       };
       serviceConfig = {
         DynamicUser = true;

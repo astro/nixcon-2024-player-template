@@ -23,6 +23,7 @@
           webserver = pkgs.stdenv.mkDerivation {
             name = "w";
             buildInputs = [ pkgs.ruby ];
+            nativeBuildInputs = [ pkgs.cowsay ];
             buildCommand = ''
               install -D -m755 ${./w} $out/bin/w
               patchShebangs $out/bin/w

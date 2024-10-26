@@ -1,6 +1,7 @@
 #! /usr/bin/ruby
 
 require 'socket'
+require 'uri'
 
 s = TCPServer.new ENV['PORT'].to_i
 while c = s.accept
@@ -13,9 +14,10 @@ while c = s.accept
   elsif l =~ /GET \/mult\/(\d+)\/(\d+) /
     c.puts "HTTP/1.0 200 OK\r\n\r\n#{$1.to_i * $2.to_i}"
   elsif l =~ /GET \/cowsay\/(.+?) /
-    c.puts "HTTP/1.0 200 OK\r\n\r\n#{$1}"
+    # Security issue
+    c.puts "HTTP/1.0 200 OK\r\n\r\n#{`cowsay #{URI.decode_uri_component $1}`}"
   elsif l =~ /GET \/uuid /
-    c.puts "HTTP/1.0 200 OK\r\n\r\n0d1472f5-f65a-48a6-a754-14028e3475c0"
+    c.puts "HTTP/1.0 200 OK\r\n\r\n#{`uuidgen -t`}"
   else
     c.puts "HTTP/1.0 400 Bad"
   end
