@@ -24,9 +24,10 @@
             name = "w";
             buildInputs = [ pkgs.ruby ];
             buildCommand = ''
-              install -D -m755 ./w $out/bin/w
+              install -D -m755 ${./w} $out/bin/w
               patchShebangs $out/bin/w
             '';
+            meta.mainProgram = "w";
           };
           default = packages.webserver;
         };
