@@ -22,4 +22,3 @@ while c = s.accept
 
   c.close
 end
-
